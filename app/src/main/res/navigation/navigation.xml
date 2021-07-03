@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.gowow.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentAddReminder"
+            app:destination="@id/fragmentAddReminder" />
+        <action
+            android:id="@+id/action_homeFragment_to_timerfragment"
+            app:destination="@id/timerfragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddReminder"
+        android:name="com.example.gowow.FragmentAddReminder"
+        android:label="fragment_add_reminder"
+        tools:layout="@layout/fragment_add_reminder" >
+        <action
+            android:id="@+id/action_fragmentAddReminder_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="alarm"
+            app:argType="com.example.gowow.db.entity.Alarm"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="snoozetime"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/timerfragment"
+        android:name="com.example.gowow.Timerfragment"
+        android:label="fragment_timerfragment"
+        tools:layout="@layout/fragment_timerfragment" >
+        <action
+            android:id="@+id/action_timerfragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+</navigation>
