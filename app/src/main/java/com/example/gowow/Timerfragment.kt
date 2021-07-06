@@ -88,22 +88,24 @@ class Timerfragment : Fragment() {
             minute %= 60
             hour %= 24
 
+            val days = booleanArrayOf(false, false, false, false, false, false, false)
             val alarm = Alarm(
-            alarmId,
-            hour,
-            minute,
-            "",
-            true,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-                0
-        )
+                alarmId,
+                hour,
+                minute,
+                "",
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                0,
+                days
+            )
             viewModel.insert(alarm)
         alarm.schedule(this.requireContext())
             findNavController().navigate(R.id.action_timerfragment_to_homeFragment)

@@ -130,7 +130,15 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         }
 
-
+val days = booleanArrayOf(
+    binding.chip1.isChecked,
+    binding.chip2.isChecked,
+    binding.chip3.isChecked,
+    binding.chip4.isChecked,
+    binding.chip5.isChecked,
+    binding.chip6.isChecked,
+    binding.chip7.isChecked
+)
         val alarm = Alarm(
             alarmId,
             hour,
@@ -145,7 +153,8 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
             binding.chip5.isChecked,
             binding.chip6.isChecked,
             binding.chip7.isChecked,
-            snz
+            snz,
+            days
         )
 
         alarm.schedule(requireContext())

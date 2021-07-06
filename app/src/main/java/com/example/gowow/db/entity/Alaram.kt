@@ -9,10 +9,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.example.gowow.service.Brodcastservice
-import kotlinx.serialization.Serializable
-import java.util.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
+import java.lang.reflect.Type
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -33,13 +36,14 @@ data class Alarm(
     var friday: Boolean,
     var saturday: Boolean,
     var sunday: Boolean,
-    var snoozetime:Int
+    var snoozetime: Int,
+    var days: ArrayList<Boolean>
 ) :Parcelable{
 
     fun schedule(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, Brodcastservice::class.java)
-        intent.putExtra("Id",alarmId)
+        intent.putExtra("Id", alarmId)
         intent.putExtra("RECURRING", recurring)
         intent.putExtra("MONDAY", monday)
         intent.putExtra("TUESDAY", tuesday)
@@ -49,7 +53,8 @@ data class Alarm(
         intent.putExtra("SATURDAY", saturday)
         intent.putExtra("SUNDAY", sunday)
         intent.putExtra("TITLE", title)
-        intent.putExtra("SNOOZETIME",snoozetime)
+        intent.putExtra("SNOOZETIME", snoozetime)
+        intent.putExtra("DAYS", days)
         val alarmPendingIntent = PendingIntent.getBroadcast(
             context,
             alarmId, intent, 0
@@ -106,5 +111,19 @@ data class Alarm(
             String.format("Alarm cancelled for %02d:%02d with id %d", hour, minute, alarmId)
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
         Log.i("cancel", toastText)
+    }
+}
+
+class converters {
+    @TypeConverter
+    fun fromString(value: Boolean?): ArrayList<String?>? {
+        val listType: Type = object : TypeToken<ArrayList<Boolean>>() {}.getType()
+        return Gson().fromJson(value.toString(), listType)
+    }
+
+    @TypeConverter
+    fun fromArrayList(list: ArrayList<Boolean>): Boolean {
+        val gson = Gson()
+        return gson.toJson(list)
     }
 }
