@@ -37,11 +37,21 @@ class  RemViewModel(private val repository:Remrepository): ViewModel() {
     }
 
 
-    private fun cancelAlaram(alarmManager: AlarmManager, id: Int,pendingIntent: PendingIntent) {
+    private fun cancelAlaram(alarmManager: AlarmManager, id: Int, pendingIntent: PendingIntent) {
         alarmManager.cancel(pendingIntent)
 
     }
 
-    fun getselectalarm(id:Int) = repository.getitem(id)
+    fun getselectalarm(id: Int) = repository.getitem(id)
+
+    var shakecount = 0
+
+    fun updateshakecount() {
+        shakecount++
+    }
+
+    fun resetshakecount() {
+        shakecount = 0
+    }
 
 }

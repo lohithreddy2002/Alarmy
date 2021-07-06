@@ -12,8 +12,6 @@ import com.example.gowow.databinding.FragmentTimerfragmentBinding
 import com.example.gowow.db.entity.Alarm
 import com.example.gowow.factory.RemFactory
 import java.util.*
-import kotlin.math.min
-import kotlin.time.hours
 
 
 class Timerfragment : Fragment() {
@@ -80,11 +78,11 @@ class Timerfragment : Fragment() {
 
         binding.addtimer.setOnClickListener {
             val cal = Calendar.getInstance()
-            Log.d("timeaa","${cal.get(Calendar.HOUR_OF_DAY)}")
+            Log.d("timeaa", "${cal.get(Calendar.HOUR_OF_DAY)}")
 
             minute += cal.get(Calendar.MINUTE)
             hour += cal.get(Calendar.HOUR_OF_DAY)
-            hour += minute/60
+            hour += minute / 60
             minute %= 60
             hour %= 24
 
@@ -107,7 +105,7 @@ class Timerfragment : Fragment() {
                 days
             )
             viewModel.insert(alarm)
-        alarm.schedule(this.requireContext())
+            alarm.schedule(this.requireContext())
             findNavController().navigate(R.id.action_timerfragment_to_homeFragment)
         }
 

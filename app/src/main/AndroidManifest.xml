@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gowow">
-        <activity android:name=".Typingactivity"></activity>
+        <activity android:name=".shakingActivity"></activity>
+        <activity android:name=".Typingactivity" />
         <activity android:name=".AlaramDismissActivity" />
         <activity android:name=".StepsFragment" />
         <activity android:name=".MainActivity">

@@ -29,6 +29,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
     private lateinit var alaramManager: AlarmManager
     private val args by navArgs<FragmentAddReminderArgs>()
     lateinit var viewModel: RemViewModel
+    var task = "None"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -177,7 +178,9 @@ val days = arrayListOf(
     }
 
     override fun sendTask(Label: String) {
-        TODO()
+        task = Label
+        binding.taskname.text = Label
+
     }
 
 }

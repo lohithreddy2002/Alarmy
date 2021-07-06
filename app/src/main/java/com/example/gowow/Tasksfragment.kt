@@ -34,9 +34,11 @@ class Tasksfragment : DialogFragment() {
         super.onStart()
         dialog?.findViewById<MaterialButton>(R.id.steps)?.setOnClickListener {
             listner.sendTask("Steps")
+            dismiss()
         }
         dialog?.findViewById<MaterialButton>(R.id.typing)?.setOnClickListener {
             listner.sendTask("Typing")
+            dismiss()
 
         }
     }
