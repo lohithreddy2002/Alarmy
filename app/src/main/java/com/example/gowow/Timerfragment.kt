@@ -94,13 +94,6 @@ class Timerfragment : Fragment() {
                 "",
                 true,
                 false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
                 0,
                 days
             )

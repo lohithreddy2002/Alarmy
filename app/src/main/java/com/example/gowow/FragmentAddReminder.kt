@@ -50,15 +50,16 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
         binding = FragmentAddReminderBinding.bind(requireView())
         if (args.alarm != null) {
             val ala = args.alarm
+
             binding.timePicker.hour = ala!!.hour
             binding.timePicker.minute = ala.minute
-            binding.chip1.isChecked = ala.monday
-            binding.chip2.isChecked = ala.tuesday
-            binding.chip3.isChecked = ala.wednesday
-            binding.chip4.isChecked = ala.thursday
-            binding.chip5.isChecked = ala.friday
-            binding.chip6.isChecked = ala.saturday
-            binding.chip7.isChecked = ala.sunday
+            binding.chip1.isChecked = ala.days[0]
+            binding.chip2.isChecked = ala.days[1]
+            binding.chip3.isChecked = ala.days[2]
+            binding.chip4.isChecked = ala.days[3]
+            binding.chip5.isChecked = ala.days[4]
+            binding.chip6.isChecked = ala.days[5]
+            binding.chip7.isChecked = ala.days[6]
             binding.snztime.text = ala.snoozetime.toString()
 
         }
@@ -147,13 +148,6 @@ val days = arrayListOf(
             "",
             true,
             true,
-            binding.chip1.isChecked,
-            binding.chip2.isChecked,
-            binding.chip3.isChecked,
-            binding.chip4.isChecked,
-            binding.chip5.isChecked,
-            binding.chip6.isChecked,
-            binding.chip7.isChecked,
             snz,
             days
         )

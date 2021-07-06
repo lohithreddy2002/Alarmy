@@ -26,13 +26,6 @@ data class Alarm(
     var title: String?,
     var started: Boolean,
     var recurring: Boolean,
-    var monday: Boolean,
-    var tuesday: Boolean,
-    var wednesday: Boolean,
-    var thursday: Boolean,
-    var friday: Boolean,
-    var saturday: Boolean,
-    var sunday: Boolean,
     var snoozetime: Int,
     var days: ArrayList<Boolean>
 ) :Parcelable{
@@ -42,13 +35,6 @@ data class Alarm(
         val intent = Intent(context, Brodcastservice::class.java)
         intent.putExtra("Id", alarmId)
         intent.putExtra("RECURRING", recurring)
-        intent.putExtra("MONDAY", monday)
-        intent.putExtra("TUESDAY", tuesday)
-        intent.putExtra("WEDNESDAY", wednesday)
-        intent.putExtra("THURSDAY", thursday)
-        intent.putExtra("FRIDAY", friday)
-        intent.putExtra("SATURDAY", saturday)
-        intent.putExtra("SUNDAY", sunday)
         intent.putExtra("TITLE", title)
         intent.putExtra("SNOOZETIME", snoozetime)
         intent.putExtra("DAYS", days)
