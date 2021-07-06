@@ -7,12 +7,8 @@ import android.content.Intent
 import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
+import androidx.room.*
 import com.example.gowow.service.Brodcastservice
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 import java.lang.reflect.Type
 import java.util.*
@@ -21,6 +17,7 @@ import kotlin.collections.ArrayList
 
 @Parcelize
 @Entity(tableName = "alarms")
+@TypeConverters(DaysConverter::class)
 data class Alarm(
     @PrimaryKey
     var alarmId: Int,
@@ -114,16 +111,17 @@ data class Alarm(
     }
 }
 
-class converters {
+@ProvidedTypeConverter
+public class DaysConverter {
     @TypeConverter
-    fun fromString(value: Boolean?): ArrayList<String?>? {
-        val listType: Type = object : TypeToken<ArrayList<Boolean>>() {}.getType()
-        return Gson().fromJson(value.toString(), listType)
+    fun fromString(value: String): ArrayList<Boolean> {
+        val al = ArrayList<Boolean>()
+        value.split("").forEach { al.add(it==="1") }
+        return al
     }
 
     @TypeConverter
-    fun fromArrayList(list: ArrayList<Boolean>): Boolean {
-        val gson = Gson()
-        return gson.toJson(list)
+    fun fromArrayList(list: ArrayList<Boolean>): String {
+        return list.joinToString("") { if (it) "1" else "0" }
     }
 }
