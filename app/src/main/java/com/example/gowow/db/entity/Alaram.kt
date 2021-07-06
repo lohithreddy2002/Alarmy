@@ -111,7 +111,7 @@ data class Alarm(
     }
 }
 
-@ProvidedTypeConverter
+
 public class DaysConverter {
     @TypeConverter
     fun fromString(value: String): ArrayList<Boolean> {

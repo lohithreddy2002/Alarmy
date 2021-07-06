@@ -16,6 +16,7 @@ import com.example.gowow.databinding.ActivityAlaramDismissBinding
 import com.example.gowow.db.entity.Alarm
 import com.example.gowow.service.NotificationSerivce
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AlaramDismissActivity : AppCompatActivity() {
@@ -60,6 +61,7 @@ class AlaramDismissActivity : AppCompatActivity() {
             cal.timeInMillis = System.currentTimeMillis()
             cal.add(Calendar.MINUTE, snztime)
 
+            val days = arrayListOf(false, false, false, false, false, false, false)
             val a = Alarm(
                 Random().nextInt(Int.MAX_VALUE),
                 cal.get(Calendar.HOUR_OF_DAY),
@@ -74,7 +76,8 @@ class AlaramDismissActivity : AppCompatActivity() {
                 false,
                 false,
                 false,
-                snztime
+                snztime,
+                days
 
             )
 

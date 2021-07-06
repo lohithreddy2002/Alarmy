@@ -88,7 +88,7 @@ class Timerfragment : Fragment() {
             minute %= 60
             hour %= 24
 
-            val days = booleanArrayOf(false, false, false, false, false, false, false)
+            val days = arrayListOf(false, false, false, false, false, false, false)
             val alarm = Alarm(
                 alarmId,
                 hour,

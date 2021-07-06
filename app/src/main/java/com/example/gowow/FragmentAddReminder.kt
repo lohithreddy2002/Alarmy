@@ -130,7 +130,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         }
 
-val days = booleanArrayOf(
+val days = arrayListOf(
     binding.chip1.isChecked,
     binding.chip2.isChecked,
     binding.chip3.isChecked,

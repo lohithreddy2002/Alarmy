@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.gowow.RemViewModel
@@ -12,6 +13,7 @@ import com.example.gowow.ReminderDatabase
 import com.example.gowow.Remrepository
 import com.example.gowow.factory.RemFactory
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Brodcastservice : BroadcastReceiver() {
@@ -19,6 +21,7 @@ class Brodcastservice : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         Toast.makeText(context, "reciervr", Toast.LENGTH_SHORT).show()
         val snz = intent!!.getIntExtra("SNOOZETIME",0)
+        Log.d("days", "${intent.getSerializableExtra("DAYS")}")
 
         if (!intent!!.getBooleanExtra("RECURRING", false)) {
             startAlarmService(context, intent,snz)
@@ -37,33 +40,35 @@ class Brodcastservice : BroadcastReceiver() {
         val calendar = Calendar.getInstance()
         val a = System.currentTimeMillis()
         calendar.timeInMillis = a
+        val day = intent.getSerializableExtra("DAYS")
+        val days = day to ArrayList<Boolean>()
         when (calendar.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> {
-                if (intent.getBooleanExtra("MONDAY", false)) {
+                if (intent.getBooleanExtra("SATURDAY", false)) {
                     return true
                 }
                 return false
             }
             Calendar.TUESDAY -> {
-                if (intent.getBooleanExtra("TUESDAY", false)) {
+                if (intent.getBooleanExtra("SATURDAY", false)) {
                     return true
                 }
                 return false
             }
             Calendar.WEDNESDAY -> {
-                if (intent.getBooleanExtra("WEDNESDAY", false)) {
+                if (intent.getBooleanExtra("SATURDAY", false)) {
                     return true
                 }
                 return false
             }
             Calendar.THURSDAY -> {
-                if (intent.getBooleanExtra("THURSDAY", false)) {
+                if (intent.getBooleanExtra("SATURDAY", false)) {
                     return true
                 }
                 return false
             }
             Calendar.FRIDAY -> {
-                if (intent.getBooleanExtra("FRIDAY", false)) {
+                if (intent.getBooleanExtra("SATURDAY", false)) {
                     return true
                 }
                 return false

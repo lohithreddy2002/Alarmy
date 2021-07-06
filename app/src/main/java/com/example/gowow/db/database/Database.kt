@@ -1,16 +1,16 @@
 package com.example.gowow
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.example.gowow.db.entity.Alarm
+import com.example.gowow.db.entity.DaysConverter
 import com.example.gowow.db.entity.Reminder
 
 @Database(
-    entities = [ Alarm::class],
+    entities = [Alarm::class],
     version = 1
 )
+@TypeConverters(DaysConverter::class)
 abstract class ReminderDatabase:RoomDatabase() {
 
     abstract fun getdao():reminderDoa
