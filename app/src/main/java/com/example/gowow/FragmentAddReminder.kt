@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,7 +22,8 @@ import com.example.gowow.factory.RemFactory
 import java.util.*
 
 
-class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected,LabelDialog.Onlabelseleccted {
+class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDialog.Onlabelseleccted,
+    Tasksfragment.OntaskSelected {
 
     private lateinit var binding: FragmentAddReminderBinding
     private lateinit var alaramManager: AlarmManager
@@ -102,7 +104,16 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected,LabelDialo
         binding.label.setOnClickListener {
             val fm: FragmentManager? = fragmentManager
             val dialog = LabelDialog()
-            dialog.setTargetFragment(this,201)
+            dialog.setTargetFragment(this, 201)
+            if (fm != null) {
+                dialog.show(fm, "")
+            }
+        }
+
+        binding.tasks.setOnClickListener {
+            val fm: FragmentManager? = fragmentManager
+            val dialog = Tasksfragment()
+            dialog.setTargetFragment(this, 201)
             if (fm != null) {
                 dialog.show(fm, "")
             }
@@ -154,6 +165,10 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected,LabelDialo
 
     override fun sendlabel(Label: String) {
         binding.title.text = Label
+    }
+
+    override fun sendTask(Label: String) {
+        TODO()
     }
 
 }

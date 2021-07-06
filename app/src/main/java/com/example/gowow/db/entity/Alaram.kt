@@ -13,6 +13,7 @@ import com.example.gowow.service.Brodcastservice
 import kotlinx.serialization.Serializable
 import java.util.*
 import kotlinx.parcelize.Parcelize
+import kotlin.collections.ArrayList
 
 
 @Parcelize

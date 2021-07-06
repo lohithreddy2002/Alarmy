@@ -44,4 +44,5 @@
             android:id="@+id/action_timerfragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
 </navigation>
