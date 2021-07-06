@@ -95,7 +95,7 @@ class Timerfragment : Fragment() {
                 true,
                 false,
                 0,
-                days
+                days = days
             )
             viewModel.insert(alarm)
             alarm.schedule(this.requireContext())

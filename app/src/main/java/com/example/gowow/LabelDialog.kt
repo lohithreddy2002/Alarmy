@@ -11,20 +11,27 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.example.gowow.factory.RemFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class LabelDialog:BottomSheetDialogFragment() {
 
-    private lateinit var listener:Onlabelseleccted
+    private lateinit var listener: Onlabelseleccted
+    val viewModel: RemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val databse = ReminderDatabase(requireContext())
+        val repo = Remrepository(databse)
+        val factory = RemFactory(repo)
+
         return inflater.inflate(R.layout.fragment_label_dialog, container, false)
     }
-
 
     interface Onlabelseleccted{
         fun sendlabel(Label:String)

@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 
 
-class Tasksfragment : DialogFragment() {
+class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount {
 
     private lateinit var listner: OntaskSelected
 
@@ -19,7 +19,8 @@ class Tasksfragment : DialogFragment() {
     }
 
     interface OntaskSelected {
-        fun sendTask(Label: String)
+        fun sendTask(Label: String, value: Int)
+
     }
 
     override fun onCreateView(
@@ -33,13 +34,15 @@ class Tasksfragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.findViewById<MaterialButton>(R.id.steps)?.setOnClickListener {
-            listner.sendTask("Steps")
-            dismiss()
+            val fm = fragmentManager
+            val dialog = stepsinputDialog()
+            dialog.setTargetFragment(this, 200)
+            if (fm != null) {
+                dialog.show(fm, "")
+            }
         }
         dialog?.findViewById<MaterialButton>(R.id.typing)?.setOnClickListener {
-            listner.sendTask("Typing")
             dismiss()
-
         }
     }
 
@@ -49,9 +52,13 @@ class Tasksfragment : DialogFragment() {
             listner = targetFragment as OntaskSelected
         } catch (e: java.lang.ClassCastException) {
             throw ClassCastException(
-                (context.toString() +
-                        " must implement NoticeDialogListener")
+                ("$context must implement NoticeDialogListener")
             )
         }
+    }
+
+    override fun sendstepscoount(steps: Int) {
+        listner.sendTask("STEPS", steps)
+        dismiss()
     }
 }

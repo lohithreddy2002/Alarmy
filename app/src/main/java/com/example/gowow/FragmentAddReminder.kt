@@ -3,7 +3,6 @@ package com.example.gowow
 
 import android.app.AlarmManager
 import android.content.Context
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -76,8 +73,9 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
         binding.button2.setOnClickListener {
             val hour = binding.timePicker.hour
             val minute = binding.timePicker.minute
-            if(binding.snztime.text.toString() != ""){
-            snztime = binding.snztime.text.toString().toInt()}
+            if (binding.snztime.text.toString() != "") {
+                snztime = binding.snztime.text.toString().toInt()
+            }
             if (binding.chipgrp.checkedChipIds.size != 0) {
                 if (args.alarm == null) {
                     scheduleAlaram(hour, minute, null, snztime)
@@ -88,23 +86,23 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
                 Log.d("timeclock", "${hour}:${minute}")
 
 
-              findNavController().navigate(R.id.action_fragmentAddReminder_to_homeFragment)
+                findNavController().navigate(R.id.action_fragmentAddReminder_to_homeFragment)
             } else {
                 Toast.makeText(requireContext(), "Pick the dates", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.snooze.setOnClickListener {
-            val fm: FragmentManager? = fragmentManager
+            val fm = fragmentManager
             val dialog = snoozedialog()
-            dialog.setTargetFragment(this,200)
+            dialog.setTargetFragment(this, 200)
             if (fm != null) {
                 dialog.show(fm, "")
             }
 
         }
         binding.label.setOnClickListener {
-            val fm: FragmentManager? = fragmentManager
+            val fm = fragmentManager
             val dialog = LabelDialog()
             dialog.setTargetFragment(this, 201)
             if (fm != null) {
@@ -113,7 +111,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
         }
 
         binding.tasks.setOnClickListener {
-            val fm: FragmentManager? = fragmentManager
+            val fm = fragmentManager
             val dialog = Tasksfragment()
             dialog.setTargetFragment(this, 201)
             if (fm != null) {
@@ -125,22 +123,22 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
     private fun scheduleAlaram(hour: Int, minute: Int, args: Alarm? = null, snz: Int) {
         var alarmId = Random().nextInt(Int.MAX_VALUE)
-        var snztime = 0
         if (args != null) {
             this.context?.let { args.cancelAlarm(it) }
             alarmId = args.alarmId
 
         }
 
-val days = arrayListOf(
-    binding.chip1.isChecked,
-    binding.chip2.isChecked,
-    binding.chip3.isChecked,
-    binding.chip4.isChecked,
-    binding.chip5.isChecked,
-    binding.chip6.isChecked,
-    binding.chip7.isChecked
-)
+        val days = arrayListOf(
+            binding.chip1.isChecked,
+            binding.chip2.isChecked,
+            binding.chip3.isChecked,
+            binding.chip4.isChecked,
+            binding.chip5.isChecked,
+            binding.chip6.isChecked,
+            binding.chip7.isChecked
+        )
+
         val alarm = Alarm(
             alarmId,
             hour,
@@ -148,9 +146,20 @@ val days = arrayListOf(
             "",
             true,
             true,
-            snz,
-            days
+            snoozetime = snz,
+            days = days
         )
+        val count = binding.count.text.toString()
+        when (binding.taskname.text) {
+            "STEPS" -> {
+                alarm.stepsCount = Integer.parseInt(count)
+            }
+            "SHAKE" -> {
+                alarm.shakeCount = Integer.parseInt(count)
+            }
+
+        }
+
 
         alarm.schedule(requireContext())
 
@@ -171,9 +180,10 @@ val days = arrayListOf(
         binding.title.text = Label
     }
 
-    override fun sendTask(Label: String) {
+    override fun sendTask(Label: String, value: Int) {
         task = Label
         binding.taskname.text = Label
+        binding.count.text = value.toString()
 
     }
 

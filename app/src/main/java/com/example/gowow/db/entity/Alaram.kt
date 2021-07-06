@@ -7,10 +7,12 @@ import android.content.Intent
 import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.example.gowow.service.Brodcastservice
 import kotlinx.parcelize.Parcelize
-import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,9 +28,12 @@ data class Alarm(
     var title: String?,
     var started: Boolean,
     var recurring: Boolean,
-    var snoozetime: Int,
+    var snoozetime: Int = 0,
+    var typingwords: Int = 0,
+    var stepsCount: Int = 0,
+    var shakeCount: Int = 0,
     var days: ArrayList<Boolean>
-) :Parcelable{
+) : Parcelable {
 
     fun schedule(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -38,6 +43,9 @@ data class Alarm(
         intent.putExtra("TITLE", title)
         intent.putExtra("SNOOZETIME", snoozetime)
         intent.putExtra("DAYS", days)
+        intent.putExtra("WORDS", typingwords)
+        intent.putExtra("STEPS", stepsCount)
+        intent.putExtra("SHAKE", shakeCount)
         val alarmPendingIntent = PendingIntent.getBroadcast(
             context,
             alarmId, intent, 0
@@ -98,11 +106,11 @@ data class Alarm(
 }
 
 
-public class DaysConverter {
+class DaysConverter {
     @TypeConverter
     fun fromString(value: String): ArrayList<Boolean> {
         val al = ArrayList<Boolean>()
-        value.split("").forEach { al.add(it==="1") }
+        value.split("").forEach { al.add(it === "1") }
         return al
     }
 
