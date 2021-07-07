@@ -23,9 +23,7 @@ private  var sensor: Sensor? =null
         super.onCreate(savedInstanceState)
         // Inflate the layout for this fragment
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        Log.d("sensr","sensmang : $sensorManager")
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        Log.d("sensor","$sensor")
         binding = FragmentStepsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -44,11 +42,12 @@ private  var sensor: Sensor? =null
             val mag = sqrt((x_a*x_a + y_a * y_a + z_a*z_a).toDouble())
             val delta = mag-mag_prev
             mag_prev = mag
-            if(delta>6){
+            if (delta > 6) {
                 count++
-                Log.d("sensor","cout = $count")
+                Log.d("sensor", "cout = $count")
+                binding.stepscount.text = count.toString()
             }
-            if(count==20){
+            if (count == intent.getIntExtra("tocomp", 0)) {
                 setResult(RESULT_OK)
                 finish()
             }
@@ -72,12 +71,10 @@ private  var sensor: Sensor? =null
             Toast.makeText(this, "no sensor", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)
             finish()
-            Log.d("sensorvalue","Fsensir")
+
 
         }
-        binding.stepscomplete.setOnClickListener {
-            finish()
-        }
+        binding.stepstodo.text = intent.getIntExtra("tocomp", 0).toString()
     }
 
     override fun onPause() {

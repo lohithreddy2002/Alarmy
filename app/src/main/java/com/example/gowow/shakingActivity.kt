@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -57,12 +59,14 @@ class shakingActivity : AppCompatActivity(), SensorEventListener {
                 if (speed > 800) {
                     viewModel.updateshakecount()
                     Log.d("shakes", "shake count = $shakecount")
+                    findViewById<TextView>(R.id.shakescount).text = shakecount.toString()
                 }
 
                 lastx = x_a
                 lasty = y_a
                 lastz = z_a
-                if (viewModel.shakecount > 10) {
+
+                if (viewModel.shakecount > intent.getIntArrayExtra("tocomp") as Int) {
                     viewModel.resetshakecount()
                     finish()
                 }
@@ -79,9 +83,11 @@ class shakingActivity : AppCompatActivity(), SensorEventListener {
         if (sensor != null) {
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME)
         } else {
+
             Toast.makeText(this, "no sensor", Toast.LENGTH_SHORT).show()
             finish()
         }
+        findViewById<TextView>(R.id.shakescount).text = intent.getIntArrayExtra("tocomp").toString()
     }
 
     override fun onPause() {

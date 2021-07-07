@@ -2,6 +2,7 @@ package com.example.gowow
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,11 +34,32 @@ class AlaramDismissActivity : AppCompatActivity() {
         super.onStart()
         val i = intent
         val snztime = i.getIntExtra("S", 0)
+        val steps = i.getIntExtra("steps", 0)
+        val words = i.getIntExtra("words", 0)
+        val shakes = i.getIntExtra("shakes", 0)
+
+        Log.d("taskss", "$snztime")
+
+        Log.d("tasks", "steps = $steps ,shakes = $shakes ,words = $words")
+
 
 
         binding.dismiss.setOnClickListener {
             val intent2 = Intent(this, Typingactivity::class.java)
-            val intent = Intent(this, StepsFragment::class.java)
+            val intent1 = Intent(this, StepsFragment::class.java)
+            val intent3 = Intent(this, shakingActivity::class.java)
+
+            if (steps != 0) {
+                intent1.putExtra("tocomp", steps)
+                previewRequest.launch(intent1)
+
+            } else if (words != 0) {
+                intent2.putExtra("tocomp", words)
+                previewRequest.launch(intent2)
+            } else if (shakes != 0) {
+                intent1.putExtra("tocomp", shakes)
+                previewRequest.launch(intent3)
+            }
 //            previewRequest.launch(intent2)
             finish()
 

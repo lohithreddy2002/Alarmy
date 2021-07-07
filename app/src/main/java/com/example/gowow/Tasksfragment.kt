@@ -42,6 +42,14 @@ class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount {
             }
         }
         dialog?.findViewById<MaterialButton>(R.id.typing)?.setOnClickListener {
+            val fm = fragmentManager
+            val dialog = typinginputdialog()
+            dialog.setTargetFragment(this, 200)
+            if (fm != null) {
+                dialog.show(fm, "")
+            }
+        }
+        dialog?.findViewById<MaterialButton>(R.id.shake)?.setOnClickListener {
             dismiss()
         }
     }

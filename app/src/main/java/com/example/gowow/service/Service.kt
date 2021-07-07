@@ -1,34 +1,27 @@
 package com.example.gowow.service
 
-import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import com.example.gowow.RemViewModel
-import com.example.gowow.ReminderDatabase
-import com.example.gowow.Remrepository
-import com.example.gowow.factory.RemFactory
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class Brodcastservice : BroadcastReceiver() {
-    lateinit var viewModel: RemViewModel
     override fun onReceive(context: Context, intent: Intent?) {
         Toast.makeText(context, "reciervr", Toast.LENGTH_SHORT).show()
-        val snz = intent!!.getIntExtra("SNOOZETIME",0)
+        val snz = intent!!.getIntExtra("SNOOZETIME", 0)
 
-        if (!intent!!.getBooleanExtra("RECURRING", false)) {
-            startAlarmService(context, intent,snz)
+        if (!intent.getBooleanExtra("RECURRING", false)) {
+            startAlarmService(context, intent, snz)
 
 
         } else {
             if (alaramisToday(intent)) {
-                startAlarmService(context, intent,snz)
+                startAlarmService(context, intent, snz)
             }
         }
 
@@ -89,9 +82,15 @@ class Brodcastservice : BroadcastReceiver() {
         return false
     }
 
-    private fun startAlarmService(context: Context, intent: Intent,snz:Int) {
+    private fun startAlarmService(context: Context, intent: Intent, snz: Int) {
         val intentService = Intent(context, NotificationSerivce::class.java)
-        intentService.putExtra("SNOOZETIME",snz)
+        intentService.putExtra("SNOOZETIME", snz)
+        Log.d("steps", "${intent.getIntExtra("STEPS", 0)}")
+
+        intentService.putExtra("STEPS", intent.getIntExtra("STEPS", 0))
+        intentService.putExtra("WORDS", intent.getIntExtra("WORDS", 0))
+        intentService.putExtra("SHAKE", intent.getIntExtra("SHAKE", 0))
+
 //    intentService.putExtra(TITLE, intent.getStringExtra(TITLE))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intentService)

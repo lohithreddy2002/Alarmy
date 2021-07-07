@@ -9,8 +9,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.gowow.*
-import com.example.gowow.factory.RemFactory
+import com.example.gowow.AlaramDismissActivity
+import com.example.gowow.R
 
 class NotificationSerivce : Service() {
     private lateinit var vib: Vibrator
@@ -23,11 +23,14 @@ class NotificationSerivce : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val intent1 = Intent(this, AlaramDismissActivity::class.java)
-        Log.d("snoozetime","${intent?.getIntExtra("SNOOZETIME",0)}")
-        val snz = intent?.getIntExtra("SNOOZETIME",0)
-        Log.d("snoozetime","$snz")
-        intent1.putExtra("S",snz)
-        val p = PendingIntent.getActivity(this, 0, intent1,0)
+        val snz = intent?.getIntExtra("SNOOZETIME", 0)
+        Log.d("snoozetime", "$snz")
+        intent1.putExtra("S", snz)
+        intent1.putExtra("steps", intent?.getIntExtra("STEPS", 0))
+        intent1.putExtra("words", intent?.getIntExtra("WORDS", 0))
+        intent1.putExtra("shakes", intent?.getIntExtra("SHAKE", 0))
+
+        val p = PendingIntent.getActivity(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT)
         val notification =
             NotificationCompat.Builder(this, "1").setContentTitle("notificationTitle")
                 .setContentText("alarama")
@@ -36,7 +39,7 @@ class NotificationSerivce : Service() {
                 .build()
 
         startForeground(1, notification)
-    
+
 
         val array = longArrayOf(0, 100, 1000)
         vib.vibrate(VibrationEffect.createWaveform(array, 0))

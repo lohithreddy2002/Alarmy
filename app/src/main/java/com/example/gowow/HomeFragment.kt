@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_timerfragment)
         }
         binding.test.setOnClickListener {
-            val intent = Intent(requireContext(), shakingActivity::class.java)
+            val intent = Intent(this.context, Typingactivity::class.java)
             startActivity(intent)
 
         }

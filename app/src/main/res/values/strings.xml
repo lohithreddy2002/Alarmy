@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Gowow</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_reminder">add reminder</string>
     <string name="add">Add</string>
@@ -9,4 +8,15 @@
     <string name="pick_time">Pick Time</string>
     <string name="picked_date">Picked Date</string>
     <string name="pick_date">Pick Date</string>
+    <string-array name="Motivational_Phrases">
+        <item>Attitude is a choice. Happiness is a choice. Optimism is a choice. Kindness is a choice. Giving is a choice. Respect is a choice. Whatever choice you make makes you. Choose wisely.</item>
+        <item>Its only after youve stepped outside your comfort zone that you begin to change, grow, and transform.</item>
+        <item>Success is not how high you have climbed, but how you make a positive difference to the world.</item>
+        <item>Life is about accepting the challenges along the way, choosing to keep moving forward, and savoring the journey.</item>
+        <item>If your actions dont live up to your words, you have nothing to say.</item>
+        <item>If you care about what people think about you, you will end up being their slave. Reject and pull your own rope</item>
+        <item>If a lion turned every time small dogs barked at it, it would be the laughing stock of the jungle.</item>
+        <item>When you cannot move a mountain, it is only because you were meant to climb it</item>
+        <item>Courage is feeling fear, not getting rid of fear, knowing something is more important than fear and taking action in the face of fear.</item>
+    </string-array>
 </resources>

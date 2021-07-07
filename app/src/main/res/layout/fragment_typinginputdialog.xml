@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".typinginputdialog"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="basic phrases"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/proverb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="proverbs"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/ownphrase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="own phrases"
+            android:textSize="20sp" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="enter no.of words"
+        android:inputType="number" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="submit" />
+
+
+</LinearLayout>
