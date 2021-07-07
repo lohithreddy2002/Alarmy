@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,7 +28,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
     private val args by navArgs<FragmentAddReminderArgs>()
     lateinit var viewModel: RemViewModel
     var task = "None"
-
+    val vm: SavedStateViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +46,21 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         super.onStart()
         binding = FragmentAddReminderBinding.bind(requireView())
+        if (vm.getsnztime() != null) {
+            binding.snztime.text = vm.getsnztime().toString()
+        }
+        if (vm.getLbel() != "") {
+            binding.title.text = vm.getLbel()
+        }
+        if (vm.gettime().first != null) {
+            binding.timePicker.hour = vm.gettime().first!!
+        }
+        if (vm.gettime().second != null) {
+            binding.timePicker.minute = vm.gettime().second!!
+        }
+
+
+
         if (args.alarm != null) {
             val ala = args.alarm
 
@@ -58,6 +74,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
             binding.chip6.isChecked = ala.days[5]
             binding.chip7.isChecked = ala.days[6]
             binding.snztime.text = ala.snoozetime.toString()
+            binding.title.text = ala.title.toString()
 
         }
 
@@ -66,6 +83,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
             timerem.text = "$hourOfDay:$minute"
+            vm.settime(hourOfDay, minute)
         }
         var snztime = 0
         snztime = args.snoozetime
@@ -110,6 +128,8 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
             }
         }
 
+
+
         binding.tasks.setOnClickListener {
             val fm = fragmentManager
             val dialog = Tasksfragment()
@@ -143,7 +163,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
             alarmId,
             hour,
             minute,
-            "",
+            vm.getLbel(),
             true,
             true,
             snoozetime = snz,
@@ -172,12 +192,14 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
     }
 
     override fun sendInput(snz: Int): Int {
-        binding.snztime.text = snz.toString()
+        vm.setsnztime(snz)
+        binding.snztime.text = vm.getsnztime().toString()
         return snz
     }
 
     override fun sendlabel(Label: String) {
-        binding.title.text = Label
+        vm.setLabel(Label)
+        binding.title.text = vm.getLbel()
     }
 
     override fun sendTask(Label: String, value: Int) {
@@ -186,6 +208,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
         binding.count.text = value.toString()
 
     }
+
 
 }
 

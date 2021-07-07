@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.gowow.databinding.FragmentTimerfragmentBinding
@@ -19,9 +20,7 @@ class Timerfragment : Fragment() {
     private lateinit var binding: FragmentTimerfragmentBinding
 
     lateinit var viewModel: RemViewModel
-    var hour = 0
-    var minute = 0
-
+    val vm: SavedStateViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,39 +37,38 @@ class Timerfragment : Fragment() {
     override fun onStart() {
         super.onStart()
         binding = FragmentTimerfragmentBinding.bind(requireView())
+        settext()
 
-        val text = binding.timefortimer
         binding.min1.setOnClickListener {
-            updatetime(1)
+            vm.updatetime(1)
             settext()
         }
         binding.min5.setOnClickListener {
-            updatetime(5)
+            vm.updatetime(5)
             settext()
         }
         binding.min10.setOnClickListener {
-            updatetime(10)
+            vm.updatetime(10)
             settext()
 
         }
         binding.min15.setOnClickListener {
-            updatetime(15)
+            vm.updatetime(15)
             settext()
 
         }
         binding.min30.setOnClickListener {
-            updatetime(30)
+            vm.updatetime(30)
             settext()
 
         }
         binding.min60.setOnClickListener {
-            updatetime(60)
+            vm.updatetime(60)
             settext()
         }
 
         binding.reset.setOnClickListener {
-            hour = 0
-            minute = 0
+            vm.resettimer()
             settext()
         }
         val alarmId = Random().nextInt(Int.MAX_VALUE)
@@ -79,18 +77,23 @@ class Timerfragment : Fragment() {
         binding.addtimer.setOnClickListener {
             val cal = Calendar.getInstance()
             Log.d("timeaa", "${cal.get(Calendar.HOUR_OF_DAY)}")
+            var minute = vm.gettimer().second
+            var hour = vm.gettimer().first
 
-            minute += cal.get(Calendar.MINUTE)
-            hour += cal.get(Calendar.HOUR_OF_DAY)
-            hour += minute / 60
-            minute %= 60
-            hour %= 24
+
+            minute = minute?.plus(cal.get(Calendar.MINUTE))
+            hour = hour?.plus(cal.get(Calendar.HOUR_OF_DAY))
+            if (minute != null) {
+                hour = hour?.plus(minute / 60)
+            }
+            minute = minute?.rem(60)
+            hour = hour?.rem(24)
 
             val days = arrayListOf(false, false, false, false, false, false, false)
             val alarm = Alarm(
                 alarmId,
-                hour,
-                minute,
+                hour!!,
+                minute!!,
                 "",
                 true,
                 false,
@@ -107,14 +110,9 @@ class Timerfragment : Fragment() {
 
     private fun settext() {
 
-        binding.timefortimer.text = "%02d:%02d".format(hour, minute)
+        binding.timefortimer.text = "%02d:%02d".format(vm.gettimer().first, vm.gettimer().second)
     }
 
-    private fun updatetime(amount: Int) {
-        minute += amount
-        hour += (minute / 60)
-        minute %= 60
-    }
 
 
 }
