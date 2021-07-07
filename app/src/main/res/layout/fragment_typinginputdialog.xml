@@ -6,31 +6,33 @@
     tools:context=".typinginputdialog"
     android:orientation="vertical">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--    <RadioGroup-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/typegrp"-->
+    <!--        >-->
 
-        <RadioButton
-            android:id="@+id/basic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="basic phrases"
-            android:textSize="20sp" />
+    <!--        <RadioButton-->
+    <!--            android:id="@+id/basic"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="basic phrases"-->
+    <!--            android:textSize="20sp" />-->
 
-        <RadioButton
-            android:id="@+id/proverb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="proverbs"
-            android:textSize="20sp" />
+    <!--        <RadioButton-->
+    <!--            android:id="@+id/proverb"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="proverbs"-->
+    <!--            android:textSize="20sp" />-->
 
-        <RadioButton
-            android:id="@+id/ownphrase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="own phrases"
-            android:textSize="20sp" />
-    </RadioGroup>
+    <!--        <RadioButton-->
+    <!--            android:id="@+id/ownphrase"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="own phrases"-->
+    <!--            android:textSize="20sp" />-->
+    <!--    </RadioGroup>-->
 
     <EditText
         android:id="@+id/editTextNumber2"
@@ -43,6 +45,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/submit_type"
         android:text="submit" />
 
 

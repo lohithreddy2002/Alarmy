@@ -57,18 +57,12 @@ class HomeFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_fragmentAddReminder)
 
-    }
+        }
         binding.timer.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_timerfragment)
         }
-        binding.test.setOnClickListener {
-            val intent = Intent(this.context, Typingactivity::class.java)
-            startActivity(intent)
-
-        }
-
-
-}
+        
+    }
 
 
     fun adapterOnClick(alarm: Alarm) {

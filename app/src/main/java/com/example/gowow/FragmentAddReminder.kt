@@ -177,6 +177,10 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
             "SHAKE" -> {
                 alarm.shakeCount = Integer.parseInt(count)
             }
+            "TYPING" -> {
+                alarm.typingwords = Integer.parseInt(count)
+
+            }
 
         }
 
@@ -206,6 +210,14 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
         task = Label
         binding.taskname.text = Label
         binding.count.text = value.toString()
+
+    }
+
+    override fun sendtypetask(Label: String, value: Int, type: String) {
+        task = Label
+        binding.taskname.text = Label
+        binding.count.text = value.toString()
+
 
     }
 

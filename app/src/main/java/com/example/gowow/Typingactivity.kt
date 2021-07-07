@@ -20,7 +20,7 @@ class Typingactivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    val watcher = object : TextWatcher {
+    private val watcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
@@ -70,7 +70,7 @@ class Typingactivity : AppCompatActivity() {
     }
 
     fun next(tocomp: Int) {
-        if (tocomp == 1) {
+        if (tocomp < 1) {
             finish()
         } else {
             binding.textetest.text.clear()

@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 
 
-class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount {
+class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount, typinginputdialog.typecount {
 
     private lateinit var listner: OntaskSelected
 
@@ -20,6 +20,7 @@ class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount {
 
     interface OntaskSelected {
         fun sendTask(Label: String, value: Int)
+        fun sendtypetask(Label: String, value: Int, type: String)
 
     }
 
@@ -69,4 +70,9 @@ class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount {
         listner.sendTask("STEPS", steps)
         dismiss()
     }
+
+    override fun sendtypecount(words: Int) {
+        listner.sendTask("TYPING", words)
+    }
+
 }
