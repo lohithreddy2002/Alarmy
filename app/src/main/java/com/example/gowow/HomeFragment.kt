@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
         binding.timer.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_timerfragment)
         }
-        
+
     }
 
 

@@ -110,7 +110,10 @@ class DaysConverter {
     @TypeConverter
     fun fromString(value: String): ArrayList<Boolean> {
         val al = ArrayList<Boolean>()
-        value.split("").forEach { al.add(it === "1") }
+        value.split("").forEach { al.add(it == "1") }
+        al.removeAt(8)
+        al.removeAt(0)
+
         return al
     }
 
