@@ -38,7 +38,7 @@ class AlarmAdapter(
     val differ = AsyncListDiffer(this, callBack)
 
 
-    class ViewHolder(private val ItemBinding: RecyclerLayoutBinding) :
+    inner class ViewHolder(private val ItemBinding: RecyclerLayoutBinding) :
         RecyclerView.ViewHolder(ItemBinding.root) {
         fun bind(a: Alarm) {
             var text = ""
@@ -96,9 +96,61 @@ class AlarmAdapter(
                     ItemBinding.days.text = text
                 }
             }
+            ItemBinding.root.setOnClickListener {
+                if (a.recurring) {
+                    listener(a)
+                } else {
+                    Toast.makeText(
+                       ItemBinding.root.context,
+                        "Timer can not be edited",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
 
+            fun onMenuItemClick(item: MenuItem, context: Context): Boolean {
+                when (item.getItemId()) {
+                    R.id.delete -> {
+                        viewModel.delete(a)
+                        notifyItemRemoved(position)
+                        notifyItemRangeChanged(0, differ.currentList.size)
+                        Snackbar.make(ItemBinding.root, "adsa", Snackbar.LENGTH_LONG).setAction("undo") {
+                            viewModel.insert(a)
+                        }.show()
+                        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.update -> {
+                        Toast.makeText(context, "update", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                }
+                return false
+            }
+            ItemBinding.optionmenu.setOnClickListener {
+                val popupMenu = PopupMenu(ItemBinding.root.context, ItemBinding.optionmenu)
+                popupMenu.inflate(R.menu.alaramoptions)
+                popupMenu.setOnMenuItemClickListener {
+                    onMenuItemClick(it,ItemBinding.root.context)
+                }
+
+                popupMenu.show()
+            }
+            ItemBinding.active.setOnClickListener {
+                if (!ItemBinding.active.isChecked) {
+                    a.cancelAlarm(ItemBinding.root.context)
+                    a.started = false
+                    viewModel.update(a)
+                } else {
+
+                    a.schedule(ItemBinding.root.context)
+                    a.started = true
+                    viewModel.update(a)
+                }
+            }
 
         }
+
 
     }
 
@@ -109,66 +161,7 @@ class AlarmAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val alarm = differ.currentList[position]
-
-        val optionsButton = holder.itemView.findViewById<TextView>(R.id.optionmenu)
-
-
-        holder.itemView.setOnClickListener {
-            if (alarm.recurring) {
-                listener(alarm)
-            } else {
-                Toast.makeText(
-                    holder.itemView.context,
-                    "Timer can not be edited",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        fun onMenuItemClick(item: MenuItem, context: Context): Boolean {
-            when (item.getItemId()) {
-                R.id.delete -> {
-                    viewModel.delete(alarm)
-                    notifyItemRemoved(position)
-                    notifyItemRangeChanged(0, differ.currentList.size)
-                    Snackbar.make(holder.itemView, "adsa", Snackbar.LENGTH_LONG).setAction("undo") {
-                        viewModel.insert(alarm)
-                    }.show()
-                    Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show()
-                    return true
-                }
-                R.id.update -> {
-                    Toast.makeText(context, "update", Toast.LENGTH_SHORT).show()
-                    return true
-                }
-            }
-            return false
-        }
-        optionsButton.setOnClickListener {
-            val popupMenu = PopupMenu(holder.itemView.context, optionsButton)
-            popupMenu.inflate(R.menu.alaramoptions)
-            popupMenu.setOnMenuItemClickListener {
-                onMenuItemClick(it, holder.itemView.context)
-            }
-
-            popupMenu.show()
-        }
-
         holder.bind(alarm)
-        val checkbox = holder.itemView.findViewById<CheckBox>(R.id.active)
-        checkbox.setOnClickListener {
-            if (!checkbox.isChecked) {
-                alarm.cancelAlarm(holder.itemView.context)
-                alarm.started = false
-                viewModel.update(alarm)
-            } else {
-
-                alarm.schedule(holder.itemView.context)
-                alarm.started = true
-                viewModel.update(alarm)
-            }
-        }
-
 
     }
 

@@ -35,7 +35,7 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/timerfragment"
         android:name="com.example.gowow.TimerFragment"
         android:label="fragment_timerfragment"
@@ -43,6 +43,6 @@
         <action
             android:id="@+id/action_timerfragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-    </fragment>
+    </dialog>
 
 </navigation>

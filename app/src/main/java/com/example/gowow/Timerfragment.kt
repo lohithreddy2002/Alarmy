@@ -12,10 +12,11 @@ import com.example.gowow.databinding.FragmentTimerfragmentBinding
 import com.example.gowow.db.entity.Alarm
 import com.example.gowow.viewmodel.RemViewModel
 import com.example.gowow.viewmodel.SavedStateViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.*
 
 
-class TimerFragment : Fragment() {
+class TimerFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentTimerfragmentBinding
     private val viewModel: RemViewModel by viewModels()
