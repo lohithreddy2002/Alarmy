@@ -7,26 +7,22 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.gowow.factory.RemFactory
+import com.example.gowow.viewmodel.RemViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Math.abs
 
-class shakingActivity : AppCompatActivity(), SensorEventListener {
+
+@AndroidEntryPoint
+class ShakingActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var sensor: Sensor? = null
-    lateinit var viewModel: RemViewModel
+    private val viewModel: RemViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val databse = ReminderDatabase(this)
-        val repo = Remrepository(databse)
-        val factory = RemFactory(repo)
-
-        viewModel = ViewModelProvider(this, factory).get(RemViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shaking)

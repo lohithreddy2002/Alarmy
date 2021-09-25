@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import com.example.gowow.RemViewModel
 import java.util.*
 
 
@@ -83,7 +82,7 @@ class Brodcastservice : BroadcastReceiver() {
     }
 
     private fun startAlarmService(context: Context, intent: Intent, snz: Int) {
-        val intentService = Intent(context, NotificationSerivce::class.java)
+        val intentService = Intent(context, NotificationService::class.java)
         intentService.putExtra("SNOOZETIME", snz)
         Log.d("steps", "${intent.getIntExtra("STEPS", 0)}")
 

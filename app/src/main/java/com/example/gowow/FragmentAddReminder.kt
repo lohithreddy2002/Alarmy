@@ -11,33 +11,30 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.gowow.databinding.FragmentAddReminderBinding
 import com.example.gowow.db.entity.Alarm
-import com.example.gowow.factory.RemFactory
+import com.example.gowow.viewmodel.RemViewModel
+import com.example.gowow.viewmodel.SavedStateViewModel
 import java.util.*
 
 
-class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDialog.Onlabelseleccted,
-    Tasksfragment.OntaskSelected {
+class FragmentAddReminder : Fragment(), SnoozeDialog.onsnoozeselected, LabelDialog.Onlabelseleccted,
+    TasksFragment.OntaskSelected {
 
     private lateinit var binding: FragmentAddReminderBinding
     private lateinit var alaramManager: AlarmManager
     private val args by navArgs<FragmentAddReminderArgs>()
-    lateinit var viewModel: RemViewModel
+    val viewModel: RemViewModel by viewModels()
     var task = "None"
     val vm: SavedStateViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val databse = ReminderDatabase(this.requireContext())
-        val repo = Remrepository(databse)
-        val factory = RemFactory(repo)
+
         alaramManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        viewModel = ViewModelProvider(this, factory).get(RemViewModel::class.java)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_reminder, container, false)
     }
@@ -112,7 +109,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         binding.snooze.setOnClickListener {
             val fm = fragmentManager
-            val dialog = snoozedialog()
+            val dialog = SnoozeDialog()
             dialog.setTargetFragment(this, 200)
             if (fm != null) {
                 dialog.show(fm, "")
@@ -132,7 +129,7 @@ class FragmentAddReminder : Fragment(), snoozedialog.onsnoozeselected, LabelDial
 
         binding.tasks.setOnClickListener {
             val fm = fragmentManager
-            val dialog = Tasksfragment()
+            val dialog = TasksFragment()
             dialog.setTargetFragment(this, 201)
             if (fm != null) {
                 dialog.show(fm, "")

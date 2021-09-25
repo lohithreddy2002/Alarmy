@@ -9,15 +9,16 @@
     <uses-feature android:name="andr" />
 
     <application
+        android:name=".App"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gowow">
-        <activity android:name=".shakingActivity"></activity>
-        <activity android:name=".Typingactivity" />
-        <activity android:name=".AlaramDismissActivity" />
+        <activity android:name=".ShakingActivity"></activity>
+        <activity android:name=".TypingActivity" />
+        <activity android:name=".AlarmDismissActivity" />
         <activity android:name=".StepsFragment" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -32,7 +33,7 @@
             android:exported="true"
             android:permission="TODO" />
 
-        <service android:name=".service.NotificationSerivce" />
+        <service android:name=".service.NotificationService" />
     </application>
 
 </manifest>

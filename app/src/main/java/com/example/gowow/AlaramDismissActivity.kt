@@ -8,11 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gowow.databinding.ActivityAlaramDismissBinding
 import com.example.gowow.db.entity.Alarm
-import com.example.gowow.service.NotificationSerivce
+import com.example.gowow.service.NotificationService
 import java.util.*
 
 
-class AlaramDismissActivity : AppCompatActivity() {
+class AlarmDismissActivity : AppCompatActivity() {
 
     val previewRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -45,9 +45,9 @@ class AlaramDismissActivity : AppCompatActivity() {
 
 
         binding.dismiss.setOnClickListener {
-            val intent2 = Intent(this, Typingactivity::class.java)
+            val intent2 = Intent(this, TypingActivity::class.java)
             val intent1 = Intent(this, StepsFragment::class.java)
-            val intent3 = Intent(this, shakingActivity::class.java)
+            val intent3 = Intent(this, ShakingActivity::class.java)
 
             if (steps != 0) {
                 intent1.putExtra("tocomp", steps)
@@ -88,7 +88,7 @@ class AlaramDismissActivity : AppCompatActivity() {
                 )
 
                 a.schedule(this)
-                val intent = Intent(this, NotificationSerivce::class.java)
+                val intent = Intent(this, NotificationService::class.java)
                 this.stopService(intent)
                 finish();
             }
@@ -99,7 +99,7 @@ class AlaramDismissActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val intent1 = Intent(this, NotificationSerivce::class.java)
+        val intent1 = Intent(this, NotificationService::class.java)
         this.stopService(intent1)
 
     }

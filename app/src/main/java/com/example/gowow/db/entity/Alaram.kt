@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.gowow.service.Brodcastservice
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.parcelize.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gowow.databinding.ActivityTypingactivityBinding
 import kotlin.random.Random
 
-class Typingactivity : AppCompatActivity() {
+class TypingActivity : AppCompatActivity() {
     private lateinit var string: SpannableString
     private lateinit var binding: ActivityTypingactivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {

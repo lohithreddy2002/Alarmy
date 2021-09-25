@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/timerfragment"
-        android:name="com.example.gowow.Timerfragment"
+        android:name="com.example.gowow.TimerFragment"
         android:label="fragment_timerfragment"
         tools:layout="@layout/fragment_timerfragment" >
         <action

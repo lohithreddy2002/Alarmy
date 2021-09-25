@@ -11,7 +11,7 @@ import android.widget.RadioGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class snoozedialog : BottomSheetDialogFragment() {
+class SnoozeDialog : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

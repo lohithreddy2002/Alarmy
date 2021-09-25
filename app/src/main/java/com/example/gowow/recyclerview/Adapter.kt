@@ -4,59 +4,70 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gowow.R
-import com.example.gowow.RemViewModel
+import com.example.gowow.viewmodel.RemViewModel
+import com.example.gowow.databinding.RecyclerLayoutBinding
 import com.example.gowow.db.entity.Alarm
 import com.google.android.material.snackbar.Snackbar
 
-class adapter(
-    var ReminderList: List<Alarm>,
+class AlarmAdapter(
     private val viewModel: RemViewModel,
-    private val listner: (Alarm) -> Unit
+    private val listener: (Alarm) -> Unit
 ) :
-    RecyclerView.Adapter<adapter.viewholder>() {
+    RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
+
+    private val callBack = object : DiffUtil.ItemCallback<Alarm>() {
+        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+            return oldItem.alarmId == newItem.alarmId
+        }
+
+    }
+
+    val differ = AsyncListDiffer(this, callBack)
 
 
-    class viewholder(itemview: View) : RecyclerView.ViewHolder(itemview) {
-        private val rem_time = itemview.findViewById<TextView>(R.id.rem_time)
-        private val checkbox = itemview.findViewById<CheckBox>(R.id.active)
-        private val imageview = itemview.findViewById<ImageView>(R.id.type)
-        private val days = itemview.findViewById<TextView>(R.id.days)
-
+    class ViewHolder(private val ItemBinding: RecyclerLayoutBinding) :
+        RecyclerView.ViewHolder(ItemBinding.root) {
         fun bind(a: Alarm) {
             var text = ""
-            rem_time.text = "%02d:%02d".format(a.hour, a.minute)
-            checkbox.isChecked = a.started
+            ItemBinding.remTime.text = "%02d:%02d".format(a.hour, a.minute)
+            ItemBinding.active.isChecked = a.started
             if (!a.recurring) {
-                imageview.setImageResource(R.drawable.ic_timer1)
+                ItemBinding.type.setImageResource(R.drawable.ic_timer1)
             } else {
 
                 if (a.stepsCount > 0) {
-                    imageview.setImageResource(R.drawable.ic_footsteps)
+                    ItemBinding.type.setImageResource(R.drawable.ic_footsteps)
                 } else if (a.shakeCount > 0) {
-                    imageview.setImageResource(R.drawable.ic_shake)
+                    ItemBinding.type.setImageResource(R.drawable.ic_shake)
                 } else if (a.typingwords > 0) {
-                    imageview.setImageResource(R.drawable.ic_typing)
+                    ItemBinding.type.setImageResource(R.drawable.ic_typing)
                 } else {
-                    imageview.setImageResource(R.drawable.ic_alarm)
+                    ItemBinding.type.setImageResource(R.drawable.ic_alarm)
                 }
-                Log.d("``", "${a.days}")
-
                 if (a.days[0] and a.days[1] and a.days[2] and a.days[3] and a.days[4] and a.days[5] and a.days[6]) {
                     text = "Everyday"
-                    days.text = text
+                    ItemBinding.days.text = text
                     Log.d("``", "1")
                 } else if (a.days[1] && a.days[2] && a.days[3] && a.days[4] && a.days[5]) {
                     text = "Weekdays"
-                    days.text = text
+                    ItemBinding.days.text = text
                     Log.d("``", "1")
                 } else if (a.days[0] && a.days[6]) {
                     text = "Weekends"
-                    days.text = text
+                    ItemBinding.days.text = text
                     Log.d("``", "1")
                 } else {
                     if (a.days[0]) {
@@ -82,7 +93,7 @@ class adapter(
                         text += "Sun"
                     }
                     Log.d("``", "1")
-                    days.text = text
+                    ItemBinding.days.text = text
                 }
             }
 
@@ -91,21 +102,20 @@ class adapter(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewholder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.recycler_layout, parent, false)
-        return viewholder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = RecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: viewholder, position: Int) {
-        val alarm = ReminderList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val alarm = differ.currentList[position]
 
-        val optionsbutton = holder.itemView.findViewById<TextView>(R.id.optionmenu)
+        val optionsButton = holder.itemView.findViewById<TextView>(R.id.optionmenu)
 
 
         holder.itemView.setOnClickListener {
             if (alarm.recurring) {
-                listner(alarm)
+                listener(alarm)
             } else {
                 Toast.makeText(
                     holder.itemView.context,
@@ -120,7 +130,7 @@ class adapter(
                 R.id.delete -> {
                     viewModel.delete(alarm)
                     notifyItemRemoved(position)
-                    notifyItemRangeChanged(0, ReminderList.size)
+                    notifyItemRangeChanged(0, differ.currentList.size)
                     Snackbar.make(holder.itemView, "adsa", Snackbar.LENGTH_LONG).setAction("undo") {
                         viewModel.insert(alarm)
                     }.show()
@@ -134,8 +144,8 @@ class adapter(
             }
             return false
         }
-        optionsbutton.setOnClickListener {
-            val popupMenu = PopupMenu(holder.itemView.context, optionsbutton)
+        optionsButton.setOnClickListener {
+            val popupMenu = PopupMenu(holder.itemView.context, optionsButton)
             popupMenu.inflate(R.menu.alaramoptions)
             popupMenu.setOnMenuItemClickListener {
                 onMenuItemClick(it, holder.itemView.context)
@@ -143,11 +153,6 @@ class adapter(
 
             popupMenu.show()
         }
-
-
-
-
-
 
         holder.bind(alarm)
         val checkbox = holder.itemView.findViewById<CheckBox>(R.id.active)
@@ -167,8 +172,7 @@ class adapter(
 
     }
 
-
     override fun getItemCount(): Int {
-        return ReminderList.size
+        return differ.currentList.size
     }
 }

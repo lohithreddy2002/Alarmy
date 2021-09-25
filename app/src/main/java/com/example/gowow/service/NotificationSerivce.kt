@@ -9,10 +9,10 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.gowow.AlaramDismissActivity
+import com.example.gowow.AlarmDismissActivity
 import com.example.gowow.R
 
-class NotificationSerivce : Service() {
+class NotificationService : Service() {
     private lateinit var vib: Vibrator
     override fun onCreate() {
         super.onCreate()
@@ -22,7 +22,7 @@ class NotificationSerivce : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val intent1 = Intent(this, AlaramDismissActivity::class.java)
+        val intent1 = Intent(this, AlarmDismissActivity::class.java)
         val snz = intent?.getIntExtra("SNOOZETIME", 0)
         Log.d("snoozetime", "$snz")
         intent1.putExtra("S", snz)
@@ -32,8 +32,8 @@ class NotificationSerivce : Service() {
 
         val p = PendingIntent.getActivity(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT)
         val notification =
-            NotificationCompat.Builder(this, "1").setContentTitle("notificationTitle")
-                .setContentText("alarama")
+            NotificationCompat.Builder(this, "1").setContentTitle("Times Up")
+                .setContentText("Alarm time")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(p)
                 .build()

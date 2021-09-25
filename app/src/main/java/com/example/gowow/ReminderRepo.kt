@@ -1,9 +1,10 @@
 package com.example.gowow
 
+import com.example.gowow.db.database.ReminderDatabase
 import com.example.gowow.db.entity.Alarm
-import com.example.gowow.db.entity.Reminder
+import javax.inject.Inject
 
-class Remrepository(private val a:ReminderDatabase ) {
+class ReminderRepository @Inject constructor (private val a: ReminderDatabase) {
     suspend fun insert(item: Alarm) = a.getdao().insertreminder(item)
     suspend fun delete(item: Alarm) = a.getdao().Delete(item)
 

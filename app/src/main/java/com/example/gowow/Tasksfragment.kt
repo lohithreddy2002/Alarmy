@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 
 
-class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount, typinginputdialog.typecount {
+class TasksFragment : DialogFragment(), StepsInputDialog.stepscount, TypingInputDialog.typecount {
 
     private lateinit var listner: OntaskSelected
 
@@ -36,7 +36,7 @@ class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount, typinginput
         super.onStart()
         dialog?.findViewById<MaterialButton>(R.id.steps)?.setOnClickListener {
             val fm = fragmentManager
-            val dialog = stepsinputDialog()
+            val dialog = StepsInputDialog()
             dialog.setTargetFragment(this, 200)
             if (fm != null) {
                 dialog.show(fm, "")
@@ -44,7 +44,7 @@ class Tasksfragment : DialogFragment(), stepsinputDialog.stepscount, typinginput
         }
         dialog?.findViewById<MaterialButton>(R.id.typing)?.setOnClickListener {
             val fm = fragmentManager
-            val dialog = typinginputdialog()
+            val dialog = StepsInputDialog()
             dialog.setTargetFragment(this, 200)
             if (fm != null) {
                 dialog.show(fm, "")

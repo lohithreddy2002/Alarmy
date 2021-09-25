@@ -15,7 +15,7 @@ import com.google.android.material.button.MaterialButton
 import kotlinx.serialization.descriptors.PrimitiveKind
 
 
-class typinginputdialog : DialogFragment() {
+class TypingInputDialog : DialogFragment() {
     private lateinit var listner: typecount
     override fun onCreate(savedInstanceState: Bundle?) {
         setStyle(STYLE_NORMAL, R.style.Theme_Gowow)

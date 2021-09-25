@@ -11,7 +11,7 @@ import android.widget.EditText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class stepsinputDialog : BottomSheetDialogFragment() {
+class StepsInputDialog : BottomSheetDialogFragment() {
 
     private lateinit var listner: stepscount
 

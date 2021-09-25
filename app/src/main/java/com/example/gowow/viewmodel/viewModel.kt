@@ -1,15 +1,18 @@
-package com.example.gowow
+package com.example.gowow.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.gowow.ReminderRepository
 import com.example.gowow.db.entity.Alarm
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlin.math.min
+import javax.inject.Inject
 
-class RemViewModel(private val repository: Remrepository) : ViewModel() {
+
+@HiltViewModel
+class RemViewModel @Inject constructor(private val repository: ReminderRepository) : ViewModel() {
     fun insert(item: Alarm) = CoroutineScope(Dispatchers.Main).launch {
         repository.insert(item)
     }
